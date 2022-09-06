@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import java.lang.ArithmeticException
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,6 +48,35 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    fun onEqual(view: View){
+        if(lastNumeric){
+            var tvValue = tvInput?.text.toString()
+            var prefix = ""
+
+            try{
+                if(tvValue.startsWith("-")){
+                    prefix = "-"
+                    tvValue = tvValue.substring(1)
+                }
+                if(tvValue.contains("-")){
+                    val splitValue = tvValue.split("-")
+
+                    var one = splitValue[0]// 99
+                    var two = splitValue[1]
+
+                    if(prefix.isNotEmpty()){
+                        one = prefix + one
+                    }
+                    var result = one.toDouble() - two.toDouble()
+
+                    tvInput?.text = result.toString()
+                }
+            }catch(e: ArithmeticException){
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun isOperatorAdded(value: String): Boolean{
